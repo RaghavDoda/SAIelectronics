@@ -1,13 +1,10 @@
 import Navbar from '../components/navbar'
-import Offers from '../components/offers'
-import Footer from '../components/footer'
-import Trending from '../components/Trending'
 
-export default function Home() {
-  return (
-    <>
-      <Navbar/>
-      <div className='bg-gray-800 flex justify-center sm:hidden'>
+const cart = () => {
+    return (
+        <>
+            <Navbar/>
+            <div className='bg-gray-800 flex justify-center sm:hidden'>
         <div className='w-full max-w-[40rem] flex bg-white rounded-full mx-2 sm:mx-0 mb-2' >
           <input className=' w-full max-w-[40rem]  text-xl px-5 outline-none rounded-full' type="text" placeholder='search...' />
           <button>
@@ -17,9 +14,9 @@ export default function Home() {
           </button>
         </div>
       </div>
-      <Offers/>
-      <Trending/>
-      <Footer/>
-    </>
-  )
+            <h1>Cart comes soon...</h1>
+        </>
+    )
 }
+
+export default cart;
