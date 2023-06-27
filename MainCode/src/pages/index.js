@@ -1,7 +1,13 @@
 import Navbar from '../components/navbar'
 import Offers from '../components/offers'
 import Footer from '../components/footer'
-import Trending from '../components/Trending'
+import Trending from '../components/trending'
+
+// trending 
+// footer 
+// services 
+// cart
+// buy now
 
 export default function Home() {
   return (
