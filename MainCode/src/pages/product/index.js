@@ -6,6 +6,7 @@ import Navbar from '../../components/navbar'
 import { useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { RadioGroup } from '@headlessui/react'
+import Footer from "@/components/footer"
 
 const product = {
   name: 'Basic Tee 6-Pack',
@@ -314,6 +315,7 @@ export default function Example() {
         </div>
       </div>
     </div>
+    <Footer/>
     </>
   )
 }    

@@ -1,7 +1,7 @@
 import Footer from '@/components/footer';
 import Navbar from '../components/navbar'
 
-const cart = () => {
+const payNow = () => {
     return (
         <>
           <div className='flex flex-col h-screen' >
@@ -16,11 +16,11 @@ const cart = () => {
                 </button>
               </div>
             </div>
-            <h1 className='flex-grow' >Cart comes soon...</h1>
+            <h1 className='flex-grow' >Pay Now comes soon...</h1>
             <Footer/>
           </div>
         </>
     )
 }
 
-export default cart;
+export default payNow;

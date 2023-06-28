@@ -4,14 +4,15 @@ import Footer from '../components/footer'
 import Trending from '../components/trending'
 
 // trending 
-// footer 
-// services 
+// profile 
 // cart
 // buy now
 
 export default function Home() {
   return (
     <>
+    <div className='flex flex-col min-h-screen' > 
+      <div className='flex-grow' >
       <Navbar/>
       <div className='bg-gray-800 flex justify-center sm:hidden'>
         <div className='w-full max-w-[40rem] flex bg-white rounded-full mx-2 sm:mx-0 mb-2' >
@@ -26,6 +27,8 @@ export default function Home() {
       <Offers/>
       <Trending/>
       <Footer/>
+      </div>
+      </div>
     </>
   )
 }
