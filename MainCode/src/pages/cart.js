@@ -1,5 +1,7 @@
 import Footer from '@/components/footer';
 import Navbar from '../components/navbar'
+import Order from '../components/order'
+import Link from 'next/link';
 
 const cart = () => {
     return (
@@ -16,7 +18,91 @@ const cart = () => {
                 </button>
               </div>
             </div>
-            <h1 className='flex-grow' >Cart comes soon...</h1>
+            <div className='flex-grow' >
+              <h1 className='text-4xl m-5 '>Shopping Cart</h1>
+              <div className='grid grid-cols-10' >
+                <div className='hidden min-[1000px]:block min-[1000px]:col-start-1 min-[100px]:col-end-7  ' >
+                  <hr />
+                  <Order/>
+                  <Order/>
+                  <Order/>
+                  <Order/>
+                  <Order/>
+                  <Order/>
+                </div>
+                <div className='hidden min-[1000px]:block min-[1000px]:col-start-7 min-[1000px]:col-end-10'>
+                  <div className='m-5 p-5 ' >
+                    <h1 className='text-xl' >Order Summary</h1>
+                    <div className='flex justify-between p-2 ' >
+                      <h1 className='text-gray-400' >Subtotal</h1>
+                      <h1 className='text-gray-400' >$99.00</h1>
+                    </div>
+                    <hr className='bg-red-500' />
+                    <div className='flex justify-between p-2 ' >
+                      <h1 className='text-gray-400' >Shipping estimate</h1>
+                      <h1 className='text-gray-400' >$5.00</h1>
+                    </div>
+                    <hr className='bg-red-500' />
+                    <div className='flex justify-between p-2 ' >
+                      <h1 className='text-gray-400' >Tax estimate</h1>
+                      <h1 className='text-gray-400' >$8.32</h1>
+                    </div>
+                    <hr className='bg-red-500' />
+                    <div className='flex justify-between p-2 ' >
+                      <h1>Order total</h1>
+                      <h1>$112.32</h1>
+                    </div>
+                    <Link href={'/payNow'} >
+                    <div className='flex justify-center' >
+                    <button className='bg-blue-700 text-white p-1 text-xl px-5 rounded-full ' >
+                      Checkout
+                    </button>
+                    </div>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div className=' min-[1000px]:hidden min-[1000px]:col-start-1 min-[100px]:col-end-7  ' >
+                  <hr />
+                  <Order/>
+                  <Order/>
+                  <Order/>
+                  <Order/>
+                  <Order/>
+                  <Order/>
+                </div>
+                <div className='flex justify-center min-[1000px]:hidden'>
+                  <div className='m-5 p-5  w-3/5 ' >
+                    <h1 className='text-xl' >Order Summary</h1>
+                    <div className='flex justify-between p-2 ' >
+                      <h1 className='text-gray-400' >Subtotal</h1>
+                      <h1 className='text-gray-400' >$99.00</h1>
+                    </div>
+                    <hr className='bg-red-500' />
+                    <div className='flex justify-between p-2 ' >
+                      <h1 className='text-gray-400' >Shipping estimate</h1>
+                      <h1 className='text-gray-400' >$5.00</h1>
+                    </div>
+                    <hr className='bg-red-500' />
+                    <div className='flex justify-between p-2 ' >
+                      <h1 className='text-gray-400' >Tax estimate</h1>
+                      <h1 className='text-gray-400' >$8.32</h1>
+                    </div>
+                    <hr className='bg-red-500' />
+                    <div className='flex justify-between p-2 ' >
+                      <h1>Order total</h1>
+                      <h1>$112.32</h1>
+                    </div>
+                    <Link href={'/payNow'}>
+                    <div className='flex justify-center' >
+                    <button className='bg-blue-700 text-white p-1 text-xl px-5 rounded-full ' >
+                      Checkout
+                    </button>
+                    </div>
+                    </Link>
+                  </div>
+                </div>
+            </div>
             <Footer/>
           </div>
         </>

@@ -4,9 +4,9 @@ import Footer from '../components/footer'
 import Trending from '../components/trending'
 
 // trending 
+// categories
 // profile 
-// cart
-// buy now
+// pay now
 
 export default function Home() {
   return (
