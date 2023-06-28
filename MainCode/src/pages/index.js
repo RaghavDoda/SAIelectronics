@@ -6,7 +6,6 @@ import Trending from '../components/trending'
 // trending 
 // categories
 // profile 
-// pay now
 
 export default function Home() {
   return (
