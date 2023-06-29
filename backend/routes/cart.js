@@ -6,15 +6,15 @@ const {
     removeProduct
 } = require('../controllers/cartController')
 
-const {requireAuth} = require('../middleware/requireAuth')
+// const {requireAuth} = require('../middleware/requireAuth')
 
 //get all product
-router.get('/', requireAuth,getProducts)
+router.get('/' ,getProducts)
 
 //add a new product
-router.post('/:id', requireAuth,addProduct)
+router.post('/:id' ,addProduct)
 
 //remove a product
-router.delete('/:id', requireAuth,removeProduct)
+router.delete('/:id' ,removeProduct)
 
 module.exports = router

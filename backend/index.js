@@ -25,7 +25,7 @@ app.use('/cart',cartRoutes)
 
 //connect to db
 // mongoose.set('strictQuery', true);
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URL)
 .then(()=>{
         
     //listen for requests

@@ -11,26 +11,17 @@ const productSchema = new Schema({
         type : Number ,
         required : true
     },
-    rating : {
-        type : Number,
-        default:0
-    },
     details: {
+        type : String,
+        required:true
+    },
+    image : {
         type : String,
         required:true
     },
     company:{
         type:String,
         required:true
-    },
-    quantity:{
-        type:String,
-        default:1
-    },
-    key : {
-        type : Number ,
-        required : true,
-        default:0
     }
 })
 

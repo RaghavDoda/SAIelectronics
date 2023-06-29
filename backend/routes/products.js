@@ -7,7 +7,7 @@ const {
     deleteProduct,
     updateProduct
 } = require('../controllers/productController')
-const {requireAuth} = require('../middleware/requireAuth')
+// const {requireAuth} = require('../middleware/requireAuth')
 
 //require auth for all workouts routes
 // router.use(requireAuth)
@@ -19,12 +19,12 @@ router.get('/',getProducts)
 router.get('/:id',getProduct)
 
 //POST a new product
-router.post('/', requireAuth,createProduct)
+router.post('/',createProduct)
 
 //DELETE a product
-router.delete('/:id',requireAuth,deleteProduct)
+router.delete('/:id',deleteProduct)
 
 //Update a product
-router.patch('/:id',requireAuth,updateProduct)
+router.patch('/:id',updateProduct)
 
 module.exports = router

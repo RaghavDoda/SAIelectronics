@@ -3,8 +3,6 @@ const mongoose = require('mongoose')
 
 // Get all products 
 const getProducts = async (req,res) =>{
-    // const user_id = req.user._id
-
     const products = await Products.find()
     res.status(200).json(products)
 }
@@ -25,20 +23,7 @@ const getProduct = async (req,res) =>{
 
 // Create new product
 const createProduct = async (req,res) => {
-    // const {title,price,details} =req.body
-
-    // let emptyFields = []
-    // if(!title){
-    //     emptyFields.push('title')
-    // }
-    // if(!price){
-    //     emptyFields.push('price')
-    // }
-    // if(!details){
-    //     emptyFields.push('details')
-    // }
-    
-    if(req.body.length > 0){
+    if(req.body.length < 5){
         return res.status(400).json({error: ' Please Fill in all the Fields',emptyFields})
     }
     // add doc to db

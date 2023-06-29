@@ -19,10 +19,10 @@ const userSchema = new Schema({
         type:Boolean,
         default:false
     },
-    token:{
-        type:String,
-        default:""
-    }
+    // token:{
+    //     type:String,
+    //     default:""
+    // }
 })
 
 // static signup method
