@@ -1,3 +1,6 @@
+import {signIn,signOut} from 'next-auth/react'
+import Link from 'next/link'
+
 export default function Example() {
     return (
       <>
@@ -65,8 +68,16 @@ export default function Example() {
                   Log in
                 </button>
               </div>
+
+              <Link  href='/api/auth/sigin' >
+                <p className='text-xs hover:underline hover:text-purple-500 ' onClick={e=>{
+                  e.preventDefault()
+                  signIn()
+                }}>Sign in with google</p>
+              </Link>
+
             </form>
-  
+            
             
           </div>
         </div>
