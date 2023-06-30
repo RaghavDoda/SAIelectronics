@@ -1,9 +1,33 @@
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import Navbar from '../components/navbar'
 import Footer from "@/components/footer"
+import { useState } from 'react'
 
 
 export default function services() {
+  const [model,setModel] = useState("")
+  const [description,setDescription] = useState("")
+  const [image,setImage] = useState("")
+  const [firstName,setFirstName] = useState("")
+  const [phone,setPhone] = useState("")
+  const [email,setEmail] = useState("")
+  const [lastName,setLastName] = useState("")
+  const [country,setCountry] = useState("")
+  const [address,setAddress] = useState("")
+  const [city,setCity] = useState("")
+  const [state,setState] = useState("")
+  const [zip,setZip] = useState("")
+
+  const clickHandler = async () => {
+    const response = await fetch('api/services/createService',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({modelNumber:model,description,image,firstName,phoneNumber:phone,emailAddress:email,lastName,country,streetAddress:address,city,state,zip})
+    })
+    const data = await response.json()
+    console.log(data)
+  }
+
   return (
     <>
       <Navbar/>
@@ -17,7 +41,8 @@ export default function services() {
                 </button>
                 </div>
             </div>
-    <form className='mx-5 md:mx-[2rem] lg:mx-[5rem] min-[1440px]:mx-[10rem] mb-5' >
+            <div className='mx-5 md:mx-[2rem] lg:mx-[5rem] min-[1440px]:mx-[10rem] mb-5' >
+    {/* <form className='mx-5 md:mx-[2rem] lg:mx-[5rem] min-[1440px]:mx-[10rem] mb-5' > */}
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -31,7 +56,9 @@ export default function services() {
                     type="text"
                     name="username"
                     id="username"
+                    onChange={(e)=>{setModel(e.target.value)}}
                     autoComplete="username"
+                    required = "true"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="eg: MX-12345"
                   />
@@ -47,6 +74,7 @@ export default function services() {
                 <textarea
                   id="about"
                   name="about"
+                  onChange={(e)=>{setDescription(e.target.value)}}
                   rows={3}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   defaultValue={''}
@@ -55,27 +83,7 @@ export default function services() {
               <p className="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about the problem</p>
             </div>
 
-            <div className="col-span-full">
-              <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">
-                Photo of the defected device
-              </label>
-              <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                <div className="text-center">
-                  <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-                  <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                    <label
-                      htmlFor="file-upload"
-                      className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                    >
-                      <span>Upload a file</span>
-                      <input id="file-upload" name="file-upload" type="file" className="sr-only" />
-                    </label>
-                    <p className="pl-1">or drag and drop</p>
-                  </div>
-                  <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 100MB</p>
-                </div>
-              </div>
-            </div>
+            
           </div>
         </div>
 
@@ -92,6 +100,7 @@ export default function services() {
                 <input
                   type="text"
                   name="first-name"
+                  onChange={(e)=>setFirstName(e.target.value)}
                   id="first-name"
                   autoComplete="given-name"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -108,6 +117,7 @@ export default function services() {
                   type="text"
                   name="last-name"
                   id="last-name"
+                  onChange={(e)=>setLastName(e.target.value)}
                   autoComplete="family-name"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -123,6 +133,7 @@ export default function services() {
                   id="email"
                   name="email"
                   type="email"
+                  onChange={(e)=>setEmail(e.target.value)}
                   autoComplete="email"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -137,6 +148,7 @@ export default function services() {
                 <input
                   id="phone"
                   name="phone"
+                  onChange={(e)=>setPhone(e.target.value)}
                   type="phone"
                   autoComplete="phone"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -144,22 +156,19 @@ export default function services() {
               </div>
             </div>
 
-            <div className="sm:col-span-3">
-              <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">
-                Country
+            <div className="sm:col-span-4">
+              <label htmlFor="phone" className="block text-sm font-medium leading-6 text-gray-900">
+                Phone number
               </label>
               <div className="mt-2">
-                <select
+                <input
                   id="country"
                   name="country"
-                  autoComplete="country-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                >
-                  <option>India</option>
-                  <option>United States</option>
-                  <option>Canada</option>
-                  <option>Mexico</option>
-                </select>
+                  onChange={(e)=>setCountry(e.target.value)}
+                  type="country"
+                  autoComplete="country"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
               </div>
             </div>
 
@@ -171,6 +180,7 @@ export default function services() {
                 <input
                   type="text"
                   name="street-address"
+                  onChange={(e)=>setAddress(e.target.value)}
                   id="street-address"
                   autoComplete="street-address"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -187,6 +197,7 @@ export default function services() {
                   type="text"
                   name="city"
                   id="city"
+                  onChange={(e)=>setCity(e.target.value)}
                   autoComplete="address-level2"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -201,6 +212,7 @@ export default function services() {
                 <input
                   type="text"
                   name="region"
+                  onChange={(e)=>setState(e.target.value)}
                   id="region"
                   autoComplete="address-level1"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -216,6 +228,7 @@ export default function services() {
                 <input
                   type="text"
                   name="postal-code"
+                  onChange={(e)=>setZip(e.target.value)}
                   id="postal-code"
                   autoComplete="postal-code"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -227,17 +240,16 @@ export default function services() {
       </div>
 
       <div className="mt-6 flex items-center justify-end gap-x-6">
-        <button type="button" className="text-sm font-semibold leading-6 text-gray-900">
-          Cancel
-        </button>
         <button
-          type="submit"
+          // type="submit"
+          onClick={clickHandler}
           className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Send
         </button>
       </div>
-    </form>
+      </div>
+    {/* </form> */}
     <Footer/>
     </>
   )

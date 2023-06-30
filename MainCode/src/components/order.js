@@ -23,7 +23,7 @@ const order = () => {
                         <XMarkIcon className="block h-6 w-6"/>
                     </button>
                     </div>
-                    <h1 className="text-gray-300 m-1" >{`${product.color} | ${product.size}`}</h1>
+                    <h1 className="text-gray-300 m-1" >{`${product.color}`}</h1>
                     <h1 className='m-1' >{product.price}</h1>
                     <input className=' m-1 border-solid bg-gray-300 text-gray-400 p-1' type="text" placeholder="Qnt." />
                 </div>                

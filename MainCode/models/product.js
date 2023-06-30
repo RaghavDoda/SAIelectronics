@@ -15,14 +15,35 @@ const productSchema = new Schema({
         type : String,
         required:true
     },
-    image : {
-        type : String,
-        required:true
-    },
+    image : [
+        {
+            type : String,
+            required:true
+        }
+    ],
     company:{
         type:String,
         required:true
-    }
+    },
+    rating : {
+        count : {
+            type:Number,
+            default:0
+        },
+        rate:{
+            type:Number,
+            default:0
+        }
+    },
+    color:{
+        type:String,
+        default:"W"
+    },
+    highlights : [
+        {
+            type:String
+        }
+    ]
 })
 mongoose.models = {}
 

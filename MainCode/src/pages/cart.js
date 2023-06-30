@@ -4,6 +4,7 @@ import Order from '../components/order'
 import Link from 'next/link';
 
 const cart = () => {
+  // const user = 
     return (
         <>
           <div className='flex flex-col h-screen' >

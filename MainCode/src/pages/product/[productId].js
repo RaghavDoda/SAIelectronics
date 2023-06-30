@@ -9,27 +9,6 @@ import { RadioGroup } from '@headlessui/react'
 import Footer from "@/components/footer"
 
 const product = {
-  name: 'Basic Tee 6-Pack',
-  price: '$192',
-  href: '#',
-  images: [
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg',
-      alt: 'Two each of gray, white, and black shirts laying flat.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg',
-      alt: 'Model wearing plain black basic tee.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg',
-      alt: 'Model wearing plain gray basic tee.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-featured-product-shot.jpg',
-      alt: 'Model wearing plain white basic tee.',
-    },
-  ],
   colors: [
     { name: 'White', class: 'bg-white', selectedClass: 'ring-gray-400' },
     { name: 'Gray', class: 'bg-gray-200', selectedClass: 'ring-gray-400' },
@@ -45,16 +24,6 @@ const product = {
     { name: '2XL', inStock: true },
     { name: '3XL', inStock: true },
   ],
-  description:
-    'The Basic Tee 6-Pack allows you to fully express your vibrant personality with three grayscale options. Feeling adventurous? Put on a heather gray tee. Want to be a trendsetter? Try our exclusive colorway: "Black". Need to add an extra pop of color to your outfit? Our white tee has you covered.',
-  highlights: [
-    'Hand cut and sewn locally',
-    'Dyed with our proprietary colors',
-    'Pre-washed & pre-shrunk',
-    'Ultra-soft 100% cotton',
-  ],
-  details:
-    'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
 }
 const reviews = { href: '#', average: 4, totalCount: 117 }
 
@@ -80,38 +49,48 @@ export default function Example({id}) {
     return (
       <>
       <Navbar/>
+      <div className=' bg-gray-800 flex justify-center sm:hidden'>
+              <div className='w-full max-w-[40rem] flex bg-white rounded-full mx-2 sm:mx-0 mb-2' >
+                <input className=' w-full max-w-[40rem]  text-xl px-5 outline-none rounded-full' type="text" placeholder='search...' />
+                <button>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none"  strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 p-1 rounded-r-full text-black mt-0 mb-0 mr-0 bg-gray-300">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+                </button>
+              </div>
+            </div>
       <div className="bg-white">
         <div className="pt-6">
           {/* Image gallery */}
           <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
             <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
               <img
-                src={product.images[0].src}
-                alt={product.images[0].alt}
-                className="h-full w-full object-cover object-center"
+                src={data.image[0]}
+                alt={data.image[0]}
+                className="h-full w-9/10 object-cover object-center"
               />
             </div>
             <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
               <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
                 <img
-                  src={product.images[1].src}
-                  alt={product.images[1].alt}
-                  className="h-full w-full object-cover object-center"
+                  src={data.image[1]}
+                  alt={data.image[1]}
+                  className="h-full w-9/10 object-cover object-center"
                 />
               </div>
               <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
                 <img
-                  src={product.images[2].src}
-                  alt={product.images[2].alt}
-                  className="h-full w-full object-cover object-center"
+                  src={data.image[2]}
+                  alt={data.image[2]}
+                  className="h-full w-9/10 object-cover object-center"
                 />
               </div>
             </div>
             <div className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
               <img
-                src={data.image}
-                alt={product.images[3].alt}
-                className="h-full w-full object-cover object-center"
+                src={data.image[3]}
+                alt={data.image[3]}
+                className="h-full w-9/10 object-cover object-center"
               />
             </div>
           </div>
@@ -124,7 +103,6 @@ export default function Example({id}) {
 
             {/* Options */}
             <div className="mt-4 lg:row-span-3 lg:mt-0">
-              <h2 className="sr-only">Product information</h2>
               <p className="text-3xl tracking-tight text-gray-900">{`${data.price} rs.`}</p>
 
               {/* Reviews */}
@@ -191,9 +169,6 @@ export default function Example({id}) {
                 <div className="mt-10">
                   <div className="flex items-center justify-between">
                     <h3 className="text-sm font-medium text-gray-900">Size</h3>
-                    <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                      Size guide
-                    </a>
                   </div>
 
                   <RadioGroup value={selectedSize} onChange={setSelectedSize} className="mt-4">
@@ -264,7 +239,7 @@ export default function Example({id}) {
                 <h3 className="sr-only">Description</h3>
 
                 <div className="space-y-6">
-                  <p className="text-base text-gray-900">{product.description}</p>
+                  <p className="text-base text-gray-900">{data.details}</p>
                 </div>
               </div>
 
@@ -273,20 +248,12 @@ export default function Example({id}) {
 
                 <div className="mt-4">
                   <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
-                    {product.highlights.map((highlight) => (
+                    {data.highlights.map((highlight) => (
                       <li key={highlight} className="text-gray-400">
                         <span className="text-gray-600">{highlight}</span>
                       </li>
                     ))}
                   </ul>
-                </div>
-              </div>
-
-              <div className="mt-10">
-                <h2 className="text-sm font-medium text-gray-900">Details</h2>
-
-                <div className="mt-4 space-y-6">
-                  <p className="text-sm text-gray-600">{data.details}</p>
                 </div>
               </div>
             </div>
