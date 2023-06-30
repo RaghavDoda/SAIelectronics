@@ -1,5 +1,6 @@
 import Footer from '@/components/footer';
 import Navbar from '../components/navbar'
+import Link from 'next/link'
 
 const profile = () => {
     return (
@@ -16,7 +17,14 @@ const profile = () => {
                 </button>
               </div>
             </div>
-            <h1 className='flex-grow' >Profile Page comes soon...</h1>
+            <div className="flex-grow">
+              <Link href='/api/auth/signin' >
+                <button className='bg-blue-500 p-1 text-lg rounded-xl m-5 text-white' >Sign in</button>
+              </Link>
+              <Link href='/api/auth/signout' >
+                <button className='bg-blue-500 p-1 text-lg rounded-xl m-5 text-white' >Sign out</button>
+              </Link>
+            </div>
             <Footer/>
           </div>
         </>

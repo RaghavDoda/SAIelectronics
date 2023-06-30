@@ -19,15 +19,14 @@ const userSchema = new Schema({
         type:Boolean,
         default:false
     },
-    // token:{
-    //     type:String,
-    //     default:""
-    // }
+    token:{
+        type:String,
+        default:""
+    }
 })
 
 // static signup method
 userSchema.statics.signup = async function (prop){
-
     //validation
     if(!prop.email || !prop.password){
         throw Error('All feilds must be filled')
@@ -69,5 +68,6 @@ userSchema.statics.login = async function (prop) {
 
     return user
 }
+mongoose.models = {}
 
 module.exports = mongoose.model('User',userSchema)

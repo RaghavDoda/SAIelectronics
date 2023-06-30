@@ -10,9 +10,7 @@ const handler = async (req,res,context) => {
     {
         return res.status(404).json({error : 'No such product'})
     }
-    const product = await Products.findOneAndUpdate({_id:id},{
-        ...req.body
-    })
+    const product = await Products.findById(id)
     if(!product){
         return res.status(404).json({error : 'No Such Product'})
     }
