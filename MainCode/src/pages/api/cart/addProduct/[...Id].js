@@ -3,19 +3,20 @@ import connectDb from '../../../../../middleware/mongoose'
 
 const handler = async (req,res) => {
     const id = req.query.Id
+    const productid = req.body.productId
     try{
-        if(req.user)
+        if(id)
         {
-            const cart = await Cart.findOne({user_id:req.user._id})
+            const cart = await Cart.findOne({user_id:id})
             if(cart)
             {
-                cart.orderlist.push({product_id:id})
+                cart.orderlist.push({product_id:productid})
                 await cart.save()
                 res.json(cart)
             }
             else
             {
-                const order = new Cart({user_id:req.user._id , orderlist: [{product_id:id}]})
+                const order = new Cart({user_id:id , orderlist: [{product_id:productid}]})
                 order.save()
                 res.json(order)
             }

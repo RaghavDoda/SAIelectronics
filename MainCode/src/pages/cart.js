@@ -2,9 +2,67 @@ import Footer from '@/components/footer';
 import Navbar from '../components/navbar'
 import Order from '../components/order'
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 const cart = () => {
-  // const user = 
+  // const userId = "649e7f39d7b6fe41120c53fd"
+  const [products,setProducts] = useState(null)
+  const [quantity,setQuantity] = useState(null)
+  const [loading,setLoading] = useState(false)
+
+  // get All Orders
+  useEffect(()=>{
+    setLoading(true)
+    const fetchOrders = async () => {
+      const response = await fetch('/api/cart/getAllProducts/649e7f39d7b6fe41120c53fd')
+      const data = await response.json()
+      setProducts(data.ans1)
+      setQuantity(data.ans2)
+    }
+    fetchOrders()
+    setLoading(false)
+  },[])
+
+  // console.log(orders)
+
+  if(loading){
+    return (
+      <>
+        <Navbar/>
+            <div className=' bg-gray-800 flex justify-center sm:hidden'>
+              <div className='w-full max-w-[40rem] flex bg-white rounded-full mx-2 sm:mx-0 mb-2' >
+                <input className=' w-full max-w-[40rem]  text-xl px-5 outline-none rounded-full' type="text" placeholder='search...' />
+                <button>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none"  strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 p-1 rounded-r-full text-black mt-0 mb-0 mr-0 bg-gray-300">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+                </button>
+              </div>
+            </div>
+            <h1 className='flex-grow' >Loading....</h1>
+      </>
+    )
+  }
+if(products==[]){
+  return(
+    <>
+      <Navbar/>
+            <div className=' bg-gray-800 flex justify-center sm:hidden'>
+              <div className='w-full max-w-[40rem] flex bg-white rounded-full mx-2 sm:mx-0 mb-2' >
+                <input className=' w-full max-w-[40rem]  text-xl px-5 outline-none rounded-full' type="text" placeholder='search...' />
+                <button>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none"  strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 p-1 rounded-r-full text-black mt-0 mb-0 mr-0 bg-gray-300">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+                </button>
+              </div>
+            </div>
+            <h1 className='flex-grow' >No orders...</h1>
+    </>
+  )
+}
+else 
+{
     return (
         <>
           <div className='flex flex-col h-screen' >
@@ -24,12 +82,11 @@ const cart = () => {
               <div className='grid grid-cols-10' >
                 <div className='hidden min-[1000px]:block min-[1000px]:col-start-1 min-[100px]:col-end-7  ' >
                   <hr />
-                  <Order/>
-                  <Order/>
-                  <Order/>
-                  <Order/>
-                  <Order/>
-                  <Order/>
+                {products && products.map((pro)=>{
+                  return(
+                      <Order data = {pro} />
+                  )
+                })}  
                 </div>
                 <div className='hidden min-[1000px]:block min-[1000px]:col-start-7 min-[1000px]:col-end-10'>
                   <div className='m-5 p-5 ' >
@@ -65,12 +122,11 @@ const cart = () => {
               </div>
               <div className=' min-[1000px]:hidden min-[1000px]:col-start-1 min-[100px]:col-end-7  ' >
                   <hr />
-                  <Order/>
-                  <Order/>
-                  <Order/>
-                  <Order/>
-                  <Order/>
-                  <Order/>
+                  {products && products.map((pro)=>{
+                  return(
+                      <Order data = {pro} />
+                  )
+                })} 
                 </div>
                 <div className='flex justify-center min-[1000px]:hidden'>
                   <div className='m-5 p-5  w-3/5 ' >
@@ -108,6 +164,7 @@ const cart = () => {
           </div>
         </>
     )
+}
 }
 
 export default cart;
