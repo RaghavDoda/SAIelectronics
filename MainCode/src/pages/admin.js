@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import Navbar from '../components/navbar'
+import Navbar from '../components/adminnavbar'
 import Footer from "@/components/footer"
 
 
