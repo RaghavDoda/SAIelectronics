@@ -22,7 +22,7 @@ const cart = () => {
     fetchOrders()
     setLoading(false)
   },[])
-
+  const nthElement = (arr, n = 0) => (n > 0 ? arr.slice(n, n + 1) : arr.slice(n))[0];
   // console.log(orders)
 
   if(loading){
@@ -43,7 +43,7 @@ const cart = () => {
       </>
     )
   }
-if(products==[]){
+if(products==null){
   return(
     <>
       <Navbar/>
@@ -82,11 +82,11 @@ else
               <div className='grid grid-cols-10' >
                 <div className='hidden min-[1000px]:block min-[1000px]:col-start-1 min-[100px]:col-end-7  ' >
                   <hr />
-                {products && products.map((pro)=>{
+                  {products && products.map((pro)=>{
                   return(
-                      <Order data = {pro} />
+                      <Order data = {pro} quant = {nthElement(quantity, products.indexOf(pro))} />
                   )
-                })}  
+                })}
                 </div>
                 <div className='hidden min-[1000px]:block min-[1000px]:col-start-7 min-[1000px]:col-end-10'>
                   <div className='m-5 p-5 ' >
@@ -124,7 +124,7 @@ else
                   <hr />
                   {products && products.map((pro)=>{
                   return(
-                      <Order data = {pro} />
+                      <Order data = {pro} quant = {nthElement(quantity, products.indexOf(pro))} />
                   )
                 })} 
                 </div>
