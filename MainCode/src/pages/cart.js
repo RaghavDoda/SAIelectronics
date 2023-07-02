@@ -3,12 +3,53 @@ import Navbar from '../components/navbar'
 import Order from '../components/order'
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { XMarkIcon } from '@heroicons/react/24/outline'
 
 const cart = () => {
   // const userId = "649e7f39d7b6fe41120c53fd"
   const [products,setProducts] = useState(null)
   const [quantity,setQuantity] = useState(null)
   const [loading,setLoading] = useState(false)
+  const [color,setColor] = useState("")
+  const [id,setId] = useState("")
+  const [total,setTotal] = useState(0)
+
+ 
+
+  const addHandler = async () => {
+      console.log(id)
+      const response = await fetch('/api/cart/addProduct/649e7f39d7b6fe41120c53fd',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({productId:id})
+      })
+      const data = await response.json()
+      setId("")
+      window.location.reload()
+      // console.log(data)
+  }
+
+  const removeHandler = async () => {
+      console.log(id)
+      const response = await fetch('/api/cart/removeProduct/649e7f39d7b6fe41120c53fd',{
+          method:'DELETE',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({productId:id})
+      })
+      const data = await response.json()
+      console.log(data)
+      setId("")
+      window.location.reload()
+  }
+
+  // useEffect(()=>{   
+  //     const checkColor = () =>{
+  //         if(pro.color=='B') setColor('Black')
+  //         if(pro.color=='W') setColor('White')
+  //         if(pro.color=='G') setColor('Gray')
+  //     }
+  //     checkColor()
+  // },[])
 
   // get All Orders
   useEffect(()=>{
@@ -22,6 +63,20 @@ const cart = () => {
     fetchOrders()
     setLoading(false)
   },[])
+
+  useEffect(()=>{
+    const totaling = async () =>{
+      var val = 0;
+      if(quantity!=null){
+      for(var i=0;i<quantity.length;i++){
+        val += quantity[i]*products[i].price
+      }
+      setTotal(val)
+      console.log(quantity)
+    }
+    }
+    totaling()
+  },[quantity])
   const nthElement = (arr, n = 0) => (n > 0 ? arr.slice(n, n + 1) : arr.slice(n))[0];
   // console.log(orders)
 
@@ -43,26 +98,26 @@ const cart = () => {
       </>
     )
   }
-if(products==null){
-  return(
-    <>
-      <Navbar/>
-            <div className=' bg-gray-800 flex justify-center sm:hidden'>
-              <div className='w-full max-w-[40rem] flex bg-white rounded-full mx-2 sm:mx-0 mb-2' >
-                <input className=' w-full max-w-[40rem]  text-xl px-5 outline-none rounded-full' type="text" placeholder='search...' />
-                <button>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none"  strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 p-1 rounded-r-full text-black mt-0 mb-0 mr-0 bg-gray-300">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                </svg>
-                </button>
+  else if(products==null){
+    return(
+      <>
+        <Navbar/>
+              <div className=' bg-gray-800 flex justify-center sm:hidden'>
+                <div className='w-full max-w-[40rem] flex bg-white rounded-full mx-2 sm:mx-0 mb-2' >
+                  <input className=' w-full max-w-[40rem]  text-xl px-5 outline-none rounded-full' type="text" placeholder='search...' />
+                  <button>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none"  strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 p-1 rounded-r-full text-black mt-0 mb-0 mr-0 bg-gray-300">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                  </svg>
+                  </button>
+                </div>
               </div>
-            </div>
-            <h1 className='flex-grow' >No orders...</h1>
-    </>
-  )
-}
-else 
-{
+              <h1 className='flex-grow' >No orders...</h1>
+      </>
+    )
+  }
+  else 
+  {
     return (
         <>
           <div className='flex flex-col h-screen' >
@@ -84,7 +139,29 @@ else
                   <hr />
                   {products && products.map((pro)=>{
                   return(
-                      <Order data = {pro} quant = {nthElement(quantity, products.indexOf(pro))} />
+                  <>
+                    <div className="grid grid-cols-5  m-5" onClick={()=>setId(pro._id)}>
+                        <div className="col-start-1 col-end-3 m-5" >
+                            <img  className="w-4/5 h-9/10" src={pro.image[3]} alt="1" />
+                        </div>                
+                        <div className="col-start-3 col-end-6" >
+                            <div className="flex justify-between m-1" >
+                            <h1>{pro.title}</h1>
+                            <button>
+                                <XMarkIcon className="block h-6 w-6"/>
+                            </button>
+                            </div>
+                            <h1 className="text-black m-1" >{`${color}`}</h1>
+                            <h1 className='m-1' >{`${pro.price} rs.`}</h1>
+                            <h1 className="text-black m-1" >{`Qnt: ${nthElement(quantity, products.indexOf(pro))}`}</h1>
+                            <div  >
+                            <button className='m-1 text-lg bg-gray-300 px-2 rounded-lg' onClick={addHandler}>{`+`}</button>
+                            <button className='m-1 text-lg bg-gray-300 px-2 rounded-lg' onClick={removeHandler}>{`-`}</button>
+                            </div>
+                            </div>                
+                        </div>
+                        <hr className="m-5"/>
+                    </>
                   )
                 })}
                 </div>
@@ -93,22 +170,22 @@ else
                     <h1 className='text-xl' >Order Summary</h1>
                     <div className='flex justify-between p-2 ' >
                       <h1 className='text-gray-400' >Subtotal</h1>
-                      <h1 className='text-gray-400' >$99.00</h1>
+                      <h1 className='text-gray-400' >{`${total} rs.`}</h1>
                     </div>
                     <hr className='bg-red-500' />
                     <div className='flex justify-between p-2 ' >
                       <h1 className='text-gray-400' >Shipping estimate</h1>
-                      <h1 className='text-gray-400' >$5.00</h1>
+                      <h1 className='text-gray-400' >{`${total/50} rs.`}</h1>
                     </div>
                     <hr className='bg-red-500' />
                     <div className='flex justify-between p-2 ' >
                       <h1 className='text-gray-400' >Tax estimate</h1>
-                      <h1 className='text-gray-400' >$8.32</h1>
+                      <h1 className='text-gray-400' >{`${total*8/100} rs.`}</h1>
                     </div>
                     <hr className='bg-red-500' />
                     <div className='flex justify-between p-2 ' >
                       <h1>Order total</h1>
-                      <h1>$112.32</h1>
+                      <h1>{`${total*11/10} rs.`}</h1>
                     </div>
                     <Link href={'/payNow'} >
                     <div className='flex justify-center' >
@@ -124,7 +201,29 @@ else
                   <hr />
                   {products && products.map((pro)=>{
                   return(
-                      <Order data = {pro} quant = {nthElement(quantity, products.indexOf(pro))} />
+                  <>
+                    <div className="grid grid-cols-5  m-5" onClick={()=>setId(pro._id)}>
+                        <div className="col-start-1 col-end-3 m-5" >
+                            <img  className="w-4/5 h-9/10" src={pro.image[3]} alt="1" />
+                        </div>                
+                        <div className="col-start-3 col-end-6" >
+                            <div className="flex justify-between m-1" >
+                            <h1>{pro.title}</h1>
+                            <button>
+                                <XMarkIcon className="block h-6 w-6"/>
+                            </button>
+                            </div>
+                            <h1 className="text-black m-1" >{`${color}`}</h1>
+                            <h1 className='m-1' >{`${pro.price} rs.`}</h1>
+                            <h1 className="text-black m-1" >{`Qnt: ${nthElement(quantity, products.indexOf(pro))}`}</h1>
+                            <div  >
+                            <button className='m-1 text-lg bg-gray-300 px-2 rounded-lg' onClick={addHandler}>{`+`}</button>
+                            <button className='m-1 text-lg bg-gray-300 px-2 rounded-lg' onClick={removeHandler}>{`-`}</button>
+                            </div>
+                            </div>                
+                        </div>
+                        <hr className="m-5"/>
+                    </>
                   )
                 })} 
                 </div>
@@ -133,22 +232,22 @@ else
                     <h1 className='text-xl' >Order Summary</h1>
                     <div className='flex justify-between p-2 ' >
                       <h1 className='text-gray-400' >Subtotal</h1>
-                      <h1 className='text-gray-400' >$99.00</h1>
+                        <h1 className='text-gray-400' >{`${total} rs.`}</h1>
                     </div>
                     <hr className='bg-red-500' />
                     <div className='flex justify-between p-2 ' >
                       <h1 className='text-gray-400' >Shipping estimate</h1>
-                      <h1 className='text-gray-400' >$5.00</h1>
+                      <h1 className='text-gray-400' >{`${total/50} rs.`}</h1>
                     </div>
                     <hr className='bg-red-500' />
                     <div className='flex justify-between p-2 ' >
                       <h1 className='text-gray-400' >Tax estimate</h1>
-                      <h1 className='text-gray-400' >$8.32</h1>
+                      <h1 className='text-gray-400' >{`${total*8/100} rs.`}</h1>
                     </div>
                     <hr className='bg-red-500' />
                     <div className='flex justify-between p-2 ' >
                       <h1>Order total</h1>
-                      <h1>$112.32</h1>
+                      <h1>{`${total*11/10} rs.`}</h1>
                     </div>
                     <Link href={'/payNow'}>
                     <div className='flex justify-center' >

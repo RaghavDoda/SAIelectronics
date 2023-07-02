@@ -75,19 +75,15 @@ const payNow = () => {
                           Country
                         </label>
                         <div className="mt-2">
-                          <select
-                            id="country"
+                          <input
+                            type="text"
                             name="country"
-                            autoComplete="country-name"
-                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                          >
-                            <option>United States</option>
-                            <option>Canada</option>
-                            <option>Mexico</option>
-                          </select>
+                            id="country"
+                            autoComplete="family-name"
+                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          />
                         </div>
                       </div>
-
                       <div className="col-span-full">
                         <label htmlFor="street-address" className="block text-sm font-medium leading-6 text-gray-900">
                           Street address
@@ -237,7 +233,7 @@ const payNow = () => {
                       <h1>Order total</h1>
                       <h1>$112.32</h1>
                     </div>
-                    <Link href={'/payNow'} >
+                    <Link href={'/payment'} >
                     <div className='flex justify-center' >
                     <button className='bg-blue-500 text-white p-1 text-xl px-5 rounded-full ' >
                       Proceed to pay
@@ -303,16 +299,13 @@ const payNow = () => {
                           Country
                         </label>
                         <div className="mt-2">
-                          <select
-                            id="country"
+                          <input
+                            type="text"
                             name="country"
-                            autoComplete="country-name"
-                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                          >
-                            <option>United States</option>
-                            <option>Canada</option>
-                            <option>Mexico</option>
-                          </select>
+                            id="country"
+                            autoComplete="family-name"
+                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          />
                         </div>
                       </div>
 
@@ -465,7 +458,7 @@ const payNow = () => {
                       <h1>Order total</h1>
                       <h1>$112.32</h1>
                     </div>
-                    <Link href={'/payNow'} >
+                    <Link href={'/payment'} >
                     <div className='flex justify-center' >
                     <button className='bg-blue-500 text-white p-1 text-xl px-5 rounded-full ' >
                       Proceed to Pay
