@@ -198,14 +198,14 @@ export async function getServerSideProps(context){
 		}
 	  }
 	}
-	// else if(session.user.email!='raghavdoda2@gmail.com'){
-	//   return {
-	// 	redirect:{
-	// 	  destination:'/',
-	// 	  permanent:false
-	// 	}
-	//   }
-	// }
+	else if(session.user.email!='raghavdoda2@gmail.com'){
+	  return {
+		redirect:{
+		  destination:'/',
+		  permanent:false
+		}
+	  }
+	}
 	return {
 	  props:{session}
 	}
