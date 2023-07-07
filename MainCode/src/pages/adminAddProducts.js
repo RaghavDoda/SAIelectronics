@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+import Footer from "@/components/footer"
 
 import { Disclosure, Menu } from '@headlessui/react'
 import { Bars3Icon, BellIcon} from '@heroicons/react/24/outline'
@@ -11,40 +13,56 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-import { Fragment, useState } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 
-const products = [
-  {
-    id: 1,
-    name: 'Throwback Hip Bag',
-    href: '#',
-    color: 'Salmon',
-    price: '$90.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-    imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-  },
-  {
-    id: 2,
-    name: 'Medium Stuff Satchel',
-    href: '#',
-    color: 'Blue',
-    price: '$32.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-    imageAlt:
-      'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-  },
-  // More products...
-]
+import {signIn,signOut,getSession} from 'next-auth/react'
 
-  
-export default function Navbar() {
 
-  return (
-    <>
+export default function produccts() {
+	const [isLoading,setIsLoading] = useState(false)
+	const [products,setProducts] = useState([])
+	const [search,setSearch] = useState("")
+	const [searched,setSearched] = useState([])
+
+		useEffect(()=>{	
+			let prod = []
+			for(let i = 0; i<products.length; i++) {
+			if((products[i].title).toLowerCase().includes(search.toLowerCase())) {
+				prod.push(products[i])
+			}
+			else if((products[i].company).toLowerCase().includes(search.toLowerCase())) {
+				prod.push(products[i])
+			}
+		}
+		if(search!="") setSearched(prod)
+		else setSearched(products)
+		},[search])
+
+
+	useEffect( ()=>{
+		setIsLoading(true)
+		const fetchProducts = async () => {
+		const response = await fetch('/api/products/getAllProducts')
+		const data = await response.json()
+		setSearched(data)
+		setProducts(data)
+		}
+		fetchProducts()
+		  setIsLoading(false)
+		},[])
+	if(isLoading) {
+		return (
+			<>
+				<h1> Loading..... </h1>
+			</>
+		)
+	}
+
+	return (
+		<>
+		<div className='flex flex-col h-screen' >
+		<div className='flex-grow' >
+		<>
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
         <>
@@ -68,14 +86,6 @@ export default function Navbar() {
                       >
                         {'SAIelectronics'}
                       </Link>
-                </div>
-                <div className='w-full max-w-[40rem] flex bg-white rounded-full' >
-                  <input className='hidden sm:block w-full max-w-[40rem]  text-xl px-5 outline-none rounded-full' type="text" placeholder='search...' />
-                  <button>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none"  strokeWidth={1.5} stroke="currentColor" className="hidden sm:block w-8 h-8 p-1 rounded-r-full text-black mt-0 mb-0 mr-0 bg-gray-300">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                  </svg>
-                  </button>
                 </div>
               <div className="flex justify-end sm:items-stretch sm:justify-start">
                       
@@ -131,5 +141,35 @@ export default function Navbar() {
       )}
     </Disclosure>
     </>
-  )
+    <div className='flex justify-center mt-10' >
+      <h1 className='text-4xl text-white bg-pink-500 p-2 mt-10 rounded-lg' >Coming soon.....</h1>
+    </div>
+		</div>
+		<Footer/>
+		</div>
+		</>
+	)
 }
+
+export async function getServerSideProps(context){
+	const session = await getSession(context)
+	if(!session){
+	  return {
+		redirect:{
+		  destination:'/login',
+		  permanent:false
+		}
+	  }
+	}
+	// else if(session.user.email!='raghavdoda2@gmail.com'){
+	//   return {
+	// 	redirect:{
+	// 	  destination:'/',
+	// 	  permanent:false
+	// 	}
+	//   }
+	// }
+	return {
+	  props:{session}
+	}
+  }

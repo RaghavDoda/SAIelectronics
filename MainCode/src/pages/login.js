@@ -136,6 +136,14 @@ export default function Example() {
         }
       }
     }
+    else if(session.user.email=='raghavdoda2@gmail.com'){
+      return {
+      redirect:{
+        destination:'/admin',
+        permanent:false
+      }
+      }
+    }
     return {
       props:{session}
     }
