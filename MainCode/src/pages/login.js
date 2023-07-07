@@ -1,18 +1,27 @@
-import { useState } from "react"
+import { useState ,useEffect } from "react"
+import Link from "next/link"
+
+import {signIn,signOut,getSession} from 'next-auth/react'
 
 export default function Example() {
-    const [email,setEmail] = useState(null)
-    const [password,setPassword] = useState(null)
+    // const [email,setEmail] = useState(null)
+    // const [password,setPassword] = useState(null)
 
-    const clickhandler = async (e) => {
-      console.log(email)
-      console.log(password)
-      const response = await fetch('api/user/login',{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({email:email,password:password}),
-      })
-      const data = await response.json()
+    // const clickhandler = async (e) => {
+    //   console.log(email)
+    //   console.log(password)
+    //   const response = await fetch('api/user/login',{
+    //     method:'POST',
+    //     headers:{'Content-Type':'application/json'},
+    //     body:JSON.stringify({email:email,password:password}),
+    //   })
+    //   const data = await response.json()
+    //   console.log(data)
+    //   localStorage.setItem('user',JSON.stringify(data));
+    // }
+
+    const signin = async () => {
+      await signIn({callbackUrl:"/"})
     }
 
     return (
@@ -27,13 +36,13 @@ export default function Example() {
         */}
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+            {/* <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
               Log in to your account
             </h2>
           </div>
   
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            {/* <form className="space-y-6"  > */}
+            <form className="space-y-6"  >
               <div>
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                   Email address
@@ -69,16 +78,31 @@ export default function Example() {
                   />
                 </div>
               </div>
-  
+
+              <div className="m-2 flex justify-end ">
+                <button className='text-sm hover:text-purple-500 hover:underline' onClick={googlesignin}>sigin with google</button>
+              </div>
+
+              <div className="m-2 flex justify-end ">
+                <button className='text-sm hover:text-purple-500 hover:underline' onClick={githubsignin}>sigin with github</button>
+              </div>
+   */}
               <div>
                 <button
                   type="submit"
-                  onClick={clickhandler}
+                  onClick={signin}
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Log in
                 </button>
               </div>
+              {/* <div>
+                <Link href={'/signup'}
+                  className="flex w-full justify-center mt-2 rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Sign up
+                </Link>
+              </div> */}
             {/* </form> */}
   
             
@@ -86,4 +110,19 @@ export default function Example() {
         </div>
       </>
     )
+  }
+
+  export async function getServerSideProps(context){
+    const session = await getSession(context)
+    if(session){
+      return {
+        redirect:{
+          destination:'/',
+          permanent:false
+        }
+      }
+    }
+    return {
+      props:{session}
+    }
   }

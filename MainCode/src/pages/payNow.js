@@ -2,12 +2,14 @@ import Footer from '@/components/footer';
 import Navbar from '../components/navbar'
 import Link from 'next/link';
 
+import { getSession} from 'next-auth/react'
+
 const payNow = () => {
     return (
         <>
           <div className='flex flex-col h-screen' >
             <Navbar/>
-            <div className=' bg-gray-800 flex justify-center sm:hidden'>
+            {/* <div className=' bg-gray-800 flex justify-center sm:hidden'>
               <div className='w-full max-w-[40rem] flex bg-white rounded-full mx-2 sm:mx-0 mb-2' >
                 <input className=' w-full max-w-[40rem]  text-xl px-5 outline-none rounded-full' type="text" placeholder='search...' />
                 <button>
@@ -16,7 +18,7 @@ const payNow = () => {
                 </svg>
                 </button>
               </div>
-            </div>
+            </div> */}
             <div className='grid grid-cols-10' >
               <div className='hidden min-[1000px]:block col-start-1 col-end-8' >
               <form className='mt-16 ml-8 ' >
@@ -475,3 +477,18 @@ const payNow = () => {
 }
 
 export default payNow;
+
+export async function getServerSideProps(context){
+  const session = await getSession(context)
+  if(!session){
+    return {
+      redirect:{
+        destination:'/login',
+        permanent:false
+      }
+    }
+  }
+  return {
+    props:{session}
+  }
+}

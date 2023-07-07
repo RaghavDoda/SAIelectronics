@@ -2,6 +2,8 @@ import { useRouter } from "next/router"
 // const router = useRouter();
 // const {params = []} = router.query
 import Navbar from '../../components/navbar'
+import { getSession} from 'next-auth/react'
+
 
 import { useEffect, useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
@@ -227,3 +229,18 @@ export async function getServerSideProps(context){
     }
   }
 } 
+
+export async function getServerSideProps(context){
+  const session = await getSession(context)
+  if(!session){
+    return {
+      redirect:{
+        destination:'/login',
+        permanent:false
+      }
+    }
+  }
+  return {
+    props:{session}
+  }
+}

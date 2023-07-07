@@ -5,8 +5,11 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline'
 
+import { getSession} from 'next-auth/react'
+
 const cart = () => {
   // const userId = "649e7f39d7b6fe41120c53fd"
+  const userid = JSON.parse(localStorage.getItem('user'))._id
   const [products,setProducts] = useState(null)
   const [quantity,setQuantity] = useState(null)
   const [loading,setLoading] = useState(false)
@@ -18,7 +21,7 @@ const cart = () => {
 
   const addHandler = async () => {
       console.log(id)
-      const response = await fetch('/api/cart/addProduct/649e7f39d7b6fe41120c53fd',{
+      const response = await fetch(`/api/cart/addProduct/${userid}`,{
           method:'POST',
           headers:{'Content-Type':'application/json'},
           body:JSON.stringify({productId:id})
@@ -31,7 +34,7 @@ const cart = () => {
 
   const removeHandler = async () => {
       console.log(id)
-      const response = await fetch('/api/cart/removeProduct/649e7f39d7b6fe41120c53fd',{
+      const response = await fetch(`/api/cart/removeProduct/${userid}`,{
           method:'DELETE',
           headers:{'Content-Type':'application/json'},
           body:JSON.stringify({productId:id})
@@ -55,7 +58,7 @@ const cart = () => {
   useEffect(()=>{
     setLoading(true)
     const fetchOrders = async () => {
-      const response = await fetch('/api/cart/getAllProducts/649e7f39d7b6fe41120c53fd')
+      const response = await fetch(`/api/cart/getAllProducts/${userid}`)
       const data = await response.json()
       setProducts(data.ans1)
       setQuantity(data.ans2)
@@ -84,7 +87,7 @@ const cart = () => {
     return (
       <>
         <Navbar/>
-            <div className=' bg-gray-800 flex justify-center sm:hidden'>
+            {/* <div className=' bg-gray-800 flex justify-center sm:hidden'>
               <div className='w-full max-w-[40rem] flex bg-white rounded-full mx-2 sm:mx-0 mb-2' >
                 <input className=' w-full max-w-[40rem]  text-xl px-5 outline-none rounded-full' type="text" placeholder='search...' />
                 <button>
@@ -93,7 +96,7 @@ const cart = () => {
                 </svg>
                 </button>
               </div>
-            </div>
+            </div> */}
             <h1 className='flex-grow' >Loading....</h1>
       </>
     )
@@ -102,7 +105,7 @@ const cart = () => {
     return(
       <>
         <Navbar/>
-              <div className=' bg-gray-800 flex justify-center sm:hidden'>
+              {/* <div className=' bg-gray-800 flex justify-center sm:hidden'>
                 <div className='w-full max-w-[40rem] flex bg-white rounded-full mx-2 sm:mx-0 mb-2' >
                   <input className=' w-full max-w-[40rem]  text-xl px-5 outline-none rounded-full' type="text" placeholder='search...' />
                   <button>
@@ -111,7 +114,7 @@ const cart = () => {
                   </svg>
                   </button>
                 </div>
-              </div>
+              </div> */}
               <h1 className='flex-grow' >No orders...</h1>
       </>
     )
@@ -122,7 +125,7 @@ const cart = () => {
         <>
           <div className='flex flex-col h-screen' >
             <Navbar/>
-            <div className=' bg-gray-800 flex justify-center sm:hidden'>
+            {/* <div className=' bg-gray-800 flex justify-center sm:hidden'>
               <div className='w-full max-w-[40rem] flex bg-white rounded-full mx-2 sm:mx-0 mb-2' >
                 <input className=' w-full max-w-[40rem]  text-xl px-5 outline-none rounded-full' type="text" placeholder='search...' />
                 <button>
@@ -131,7 +134,7 @@ const cart = () => {
                 </svg>
                 </button>
               </div>
-            </div>
+            </div> */}
             <div className='flex-grow' >
               <h1 className='text-4xl m-5 '>Shopping Cart</h1>
               <div className='grid grid-cols-10' >
@@ -267,3 +270,18 @@ const cart = () => {
 }
 
 export default cart;
+
+export async function getServerSideProps(context){
+  const session = await getSession(context)
+  if(!session){
+    return {
+      redirect:{
+        destination:'/login',
+        permanent:false
+      }
+    }
+  }
+  return {
+    props:{session}
+  }
+}

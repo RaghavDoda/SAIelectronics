@@ -2,12 +2,14 @@ import Footer from '@/components/footer';
 import Navbar from '../components/navbar'
 import Link from 'next/link'
 
+import { getSession} from 'next-auth/react'
+
 const profile = () => {
     return (
         <>
           <div className='flex flex-col h-screen' >
             <Navbar/>
-            <div className=' bg-gray-800 flex justify-center sm:hidden'>
+            {/* <div className=' bg-gray-800 flex justify-center sm:hidden'>
               <div className='w-full max-w-[40rem] flex bg-white rounded-full mx-2 sm:mx-0 mb-2' >
                 <input className=' w-full max-w-[40rem]  text-xl px-5 outline-none rounded-full' type="text" placeholder='search...' />
                 <button>
@@ -16,7 +18,7 @@ const profile = () => {
                 </svg>
                 </button>
               </div>
-            </div>
+            </div> */}
             <div className="flex-grow">
                 <div className='flex justify-center mt-20 ' >
                     <h1 className='text-4xl text-white bg-pink-500 w-3/10 justify-center rounded-lg p-3' >Coming soon...</h1>
@@ -29,3 +31,18 @@ const profile = () => {
 }
 
 export default profile;
+
+export async function getServerSideProps(context){
+  const session = await getSession(context)
+  if(!session){
+    return {
+      redirect:{
+        destination:'/login',
+        permanent:false
+      }
+    }
+  }
+  return {
+    props:{session}
+  }
+}

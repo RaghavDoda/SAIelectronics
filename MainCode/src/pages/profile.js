@@ -1,13 +1,21 @@
 import Footer from '@/components/footer';
 import Navbar from '../components/navbar'
 import Link from 'next/link'
+import { useEffect } from 'react';
+import {signIn,signOut,getSession} from 'next-auth/react'
+
 
 const profile = () => {
+  const signout = async () => {
+    localStorage.removeItem('user')
+    await signOut()
+  }
+
     return (
         <>
           <div className='flex flex-col h-screen' >
             <Navbar/>
-            <div className=' bg-gray-800 flex justify-center sm:hidden'>
+            {/* <div className=' bg-gray-800 flex justify-center sm:hidden'>
               <div className='w-full max-w-[40rem] flex bg-white rounded-full mx-2 sm:mx-0 mb-2' >
                 <input className=' w-full max-w-[40rem]  text-xl px-5 outline-none rounded-full' type="text" placeholder='search...' />
                 <button>
@@ -16,14 +24,15 @@ const profile = () => {
                 </svg>
                 </button>
               </div>
-            </div>
+            </div> */}
             <div className="flex-grow">
-              <Link href='/api/auth/signin' >
-                <button className='bg-blue-500 p-1 text-lg rounded-xl m-5 text-white' >Sign in</button>
-              </Link>
-              <Link href='/api/auth/signout' >
-                <button className='bg-blue-500 p-1 text-lg rounded-xl m-5 text-white' >Sign out</button>
-              </Link>
+              {/* <Link href='/login' > */}
+                <button className='bg-blue-500 p-1 text-lg rounded-xl m-5 text-white' onClick={signout} >Log out</button>
+              {/* </Link> */}
+              {/* <Link href='/signup' >
+                <button className='bg-blue-500 p-1 text-lg rounded-xl m-5 text-white' >Sign up</button>
+              </Link> */}
+              {/* <button className='bg-blue-500 p-1 text-lg rounded-xl m-5 text-white' onClick={clickhandler} >Log out</button> */}
             </div>
             <Footer/>
           </div>
@@ -32,3 +41,18 @@ const profile = () => {
 }
 
 export default profile;
+
+export async function getServerSideProps(context){
+  const session = await getSession(context)
+  if(!session){
+    return {
+      redirect:{
+        destination:'/login',
+        permanent:false
+      }
+    }
+  }
+  return {
+    props:{session}
+  }
+}

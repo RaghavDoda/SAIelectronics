@@ -3,6 +3,7 @@ import Navbar from '../components/navbar'
 import Footer from "@/components/footer"
 import { useState } from 'react'
 
+import { getSession} from 'next-auth/react'
 
 export default function services() {
   const [model,setModel] = useState("")
@@ -31,7 +32,7 @@ export default function services() {
   return (
     <>
       <Navbar/>
-            <div className='bg-gray-800 flex justify-center sm:hidden'>
+            {/* <div className='bg-gray-800 flex justify-center sm:hidden'>
                 <div className='w-full max-w-[40rem] flex bg-white rounded-full mx-2 sm:mx-0 mb-2' >
                 <input className=' w-full max-w-[40rem]  text-xl px-5 outline-none rounded-full' type="text" placeholder='search...' />
                 <button>
@@ -40,7 +41,7 @@ export default function services() {
                 </svg>
                 </button>
                 </div>
-            </div>
+            </div> */}
             <div className='mx-5 md:mx-[2rem] lg:mx-[5rem] min-[1440px]:mx-[10rem] mb-5' >
     {/* <form className='mx-5 md:mx-[2rem] lg:mx-[5rem] min-[1440px]:mx-[10rem] mb-5' > */}
       <div className="space-y-12">
@@ -253,4 +254,19 @@ export default function services() {
     <Footer/>
     </>
   )
+}
+
+export async function getServerSideProps(context){
+  const session = await getSession(context)
+  if(!session){
+    return {
+      redirect:{
+        destination:'/login',
+        permanent:false
+      }
+    }
+  }
+  return {
+    props:{session}
+  }
 }

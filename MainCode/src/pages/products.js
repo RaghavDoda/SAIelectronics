@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
-import Navbar from '../components/navbar'
+import Navbars from '../components/navbar2'
 import Footer from "@/components/footer"
+
+import { getSession} from 'next-auth/react'
 
 
 export default function produccts() {
@@ -29,7 +31,7 @@ export default function produccts() {
 		<>
 		<div className='flex flex-col h-screen' >
 		<div className='flex-grow' >
-		<Navbar/>
+		<Navbars/>
 		<div className='bg-gray-800 flex justify-center sm:hidden'>
 			<div className='w-full max-w-[40rem] flex bg-white rounded-full mx-2 sm:mx-0 mb-2' >
 				<input className=' w-full max-w-[40rem]  text-xl px-5 outline-none rounded-full' type="text" placeholder='search...' />
@@ -67,3 +69,18 @@ export default function produccts() {
 		</>
 	)
 }
+
+export async function getServerSideProps(context){
+	const session = await getSession(context)
+	if(!session){
+	  return {
+		redirect:{
+		  destination:'/login',
+		  permanent:false
+		}
+	  }
+	}
+	return {
+	  props:{session}
+	}
+  }
