@@ -33,7 +33,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Example({id}) {
+export default function Example({id,session}) {
   const [selectedColor, setSelectedColor] = useState(product.colors[0])
   const [selectedSize, setSelectedSize] = useState(product.sizes[2])
   const [data,setData] = useState(null)
@@ -47,9 +47,10 @@ export default function Example({id}) {
     fetchProductData()
   },[])
   const clickHandler = async () => {
+  const userid = JSON.parse(localStorage.getItem('user'))._id
     const response = await fetch(`/api/products/getSingleProduct/${id}`)
     const data = await response.json()
-    const response2 = await fetch('/api/cart/addToCart/649e7f39d7b6fe41120c53fd',{
+    const response2 = await fetch(`/api/cart/addToCart/${userid}`,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({productId:data})
@@ -60,7 +61,7 @@ export default function Example({id}) {
     return (
       <>
       <Navbar/>
-      <div className=' bg-gray-800 flex justify-center sm:hidden'>
+      {/* <div className=' bg-gray-800 flex justify-center sm:hidden'>
               <div className='w-full max-w-[40rem] flex bg-white rounded-full mx-2 sm:mx-0 mb-2' >
                 <input className=' w-full max-w-[40rem]  text-xl px-5 outline-none rounded-full' type="text" placeholder='search...' />
                 <button>
@@ -69,7 +70,7 @@ export default function Example({id}) {
                 </svg>
                 </button>
               </div>
-            </div>
+            </div> */}
       <div className="bg-white">
         <div className="pt-6">
           {/* Image gallery */}
@@ -223,14 +224,6 @@ export default function Example({id}) {
 
 export async function getServerSideProps(context){
   const {productId} = context.query
-  return {
-    props : {
-      id : productId 
-    }
-  }
-} 
-
-export async function getServerSideProps(context){
   const session = await getSession(context)
   if(!session){
     return {
@@ -241,6 +234,9 @@ export async function getServerSideProps(context){
     }
   }
   return {
-    props:{session}
+    props : {
+      id : productId ,
+      session : session
+    }
   }
-}
+} 

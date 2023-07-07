@@ -20,8 +20,13 @@ export default function Example() {
     //   localStorage.setItem('user',JSON.stringify(data));
     // }
 
-    const signin = async () => {
-      await signIn({callbackUrl:"/"})
+    const googlesignin = async () => {
+      await signIn('google',{callbackUrl:"/"})
+    }
+
+
+    const githubsignin = async () => {
+      await signIn('github',{callbackUrl:"/"})
     }
 
     return (
@@ -90,10 +95,19 @@ export default function Example() {
               <div>
                 <button
                   type="submit"
-                  onClick={signin}
+                  onClick={googlesignin}
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Log in
+                  Log in with Google
+                </button>
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  onClick={githubsignin}
+                  className="flex w-full justify-center mt-2 rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Log in with Github
                 </button>
               </div>
               {/* <div>
