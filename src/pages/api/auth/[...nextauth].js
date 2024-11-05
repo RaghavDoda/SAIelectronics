@@ -18,4 +18,16 @@ export default NextAuth({
   session:{
     strategy:'jwt',
   },
+  callbacks: {
+    async jwt({ token, user }) {
+        if (user) {
+            token.email = user.email; // Add email to token
+        }
+        return token;
+    },
+    async session({ session, token }) {
+        session.user.email = token.email; // Attach email to session
+        return session;
+    },
+},
 })
