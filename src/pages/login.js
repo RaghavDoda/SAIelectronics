@@ -1,31 +1,45 @@
+// pages/login.js
+
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { signIn, getSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
-export default function Example() {
+export default function Login() {
     const router = useRouter();
+    const { data: session, status } = useSession();
 
     useEffect(() => {
-        const checkSession = async () => {
-            const session = await getSession();
-            if (session) {
-                if (session.user.email === "raghavdoda2@gmail.com") {
-                    router.push("/admin"); // Redirect to admin if email matches
-                } else {
-                    router.push("/"); // Redirect to home for other users
-                }
-            }
-        };
+        if (status === "loading") return; // Wait until session is loading
 
-        checkSession();
-    }, [router]);
+        if (session) {
+            if (session.user.email === "raghavdoda2@gmail.com") {
+                router.push("/admin"); // Redirect to admin if email matches
+            } else {
+                router.push("/"); // Redirect to home for other users
+            }
+        }
+    }, [session, status, router]);
 
     const googlesignin = async () => {
-        await signIn("google", { callbackUrl: "http://saielectronics-ko4ehhiks-raghav03dodagmailcoms-projects.vercel.app" });
+        const result = await signIn("google", { 
+            callbackUrl: "https://saielectronics-ko4ehhiks-raghav03dodagmailcoms-projects.vercel.app",
+            redirect: false 
+        });
+
+        if (result?.error) {
+            console.error("Error signing in:", result.error);
+        }
     };
 
     const githubsignin = async () => {
-        await signIn("github", { callbackUrl: "http://saielectronics-ko4ehhiks-raghav03dodagmailcoms-projects.vercel.app" });
+        const result = await signIn("github", { 
+            callbackUrl: "https://saielectronics-ko4ehhiks-raghav03dodagmailcoms-projects.vercel.app",
+            redirect: false 
+        });
+
+        if (result?.error) {
+            console.error("Error signing in:", result.error);
+        }
     };
 
     return (
