@@ -9,6 +9,7 @@ export default function Example() {
     useEffect(() => {
         const checkSession = async () => {
             const session = await getSession();
+            console.log(session)
             if (session) {
                 // If user is authenticated, redirect based on email
                 if (session.user.email === "raghavdoda2@gmail.com") {
