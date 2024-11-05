@@ -21,11 +21,11 @@ export default function Example() {
     }, [router]);
 
     const googlesignin = async () => {
-        await signIn("google", { callbackUrl: "http://saielectronics-ko4ehhiks-raghav03dodagmailcoms-projects.vercel.app" });
+        await signIn("google", { callbackUrl: "https://saielectronics-ko4ehhiks-raghav03dodagmailcoms-projects.vercel.app" });
     };
 
     const githubsignin = async () => {
-        await signIn("github", { callbackUrl: "http://saielectronics-ko4ehhiks-raghav03dodagmailcoms-projects.vercel.app" });
+        await signIn("github", { callbackUrl: "https://saielectronics-ko4ehhiks-raghav03dodagmailcoms-projects.vercel.app" });
     };
 
     return (
