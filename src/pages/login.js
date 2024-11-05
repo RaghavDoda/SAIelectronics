@@ -1,45 +1,31 @@
-// pages/login.js
-
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, getSession } from "next-auth/react";
 
-export default function Login() {
+export default function Example() {
     const router = useRouter();
-    const { data: session, status } = useSession();
 
     useEffect(() => {
-        if (status === "loading") return; // Wait until session is loading
-
-        if (session) {
-            if (session.user.email === "raghavdoda2@gmail.com") {
-                router.push("/admin"); // Redirect to admin if email matches
-            } else {
-                router.push("/"); // Redirect to home for other users
+        const checkSession = async () => {
+            const session = await getSession();
+            if (session) {
+                if (session.user.email === "raghavdoda2@gmail.com") {
+                    router.push("/admin"); // Redirect to admin if email matches
+                } else {
+                    router.push("/"); // Redirect to home for other users
+                }
             }
-        }
-    }, [session, status, router]);
+        };
+
+        checkSession();
+    }, [router]);
 
     const googlesignin = async () => {
-        const result = await signIn("google", { 
-            callbackUrl: "https://saielectronics-ko4ehhiks-raghav03dodagmailcoms-projects.vercel.app",
-            redirect: false 
-        });
-
-        if (result?.error) {
-            console.error("Error signing in:", result.error);
-        }
+        await signIn("google", { callbackUrl: "http://saielectronics-ko4ehhiks-raghav03dodagmailcoms-projects.vercel.app" });
     };
 
     const githubsignin = async () => {
-        const result = await signIn("github", { 
-            callbackUrl: "https://saielectronics-ko4ehhiks-raghav03dodagmailcoms-projects.vercel.app",
-            redirect: false 
-        });
-
-        if (result?.error) {
-            console.error("Error signing in:", result.error);
-        }
+        await signIn("github", { callbackUrl: "http://saielectronics-ko4ehhiks-raghav03dodagmailcoms-projects.vercel.app" });
     };
 
     return (
